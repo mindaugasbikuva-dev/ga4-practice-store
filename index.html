@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GA4 Practice Store</title>
+
+  <!--
+    GOOGLE ANALYTICS 4
+    After creating your separate GA4 Practice Web Data Stream,
+    replace G-6LTFG8ZDKH in BOTH places below with your Measurement ID.
+
+    IMPORTANT: use only the Measurement ID from your practice GA4 property.
+    Do not use Bikuva.lt's GA4 Measurement ID.
+  -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6LTFG8ZDKH');
+  </script>
+
+  <style>
+    :root{--bg:#f5f6f8;--card:#fff;--text:#172033;--muted:#667085;--primary:#2563eb;--border:#e5e7eb;--success:#15803d}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    header{background:#111827;color:#fff;position:sticky;top:0;z-index:20}
+    .nav{max-width:1100px;margin:auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:20px;font-weight:700}
+    nav a{color:#fff;text-decoration:none;margin-left:22px;cursor:pointer}
+    .hero{background:#fff;text-align:center;padding:55px 20px}
+    .hero h1{margin:0 0 10px;font-size:38px}
+    .hero p{margin:0;color:var(--muted)}
+    .container{max-width:1100px;margin:35px auto;padding:0 20px}
+    h2{margin-top:0}
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:0 3px 14px rgba(16,24,40,.05)}
+    .image{height:150px;border-radius:9px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-size:58px;margin-bottom:15px}
+    .card h3{margin:8px 0}
+    .desc{color:var(--muted);min-height:40px}
+    .price{font-size:21px;font-weight:700;margin:14px 0}
+    button{border:0;border-radius:7px;padding:11px 15px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer}
+    button.secondary{background:#475467}
+    button.danger{background:#b42318}
+    .section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:25px;margin-top:30px}
+    .cart-row{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid var(--border)}
+    .cart-actions{display:flex;gap:8px;align-items:center}
+    .total{font-size:22px;font-weight:700;text-align:right;margin:20px 0}
+    .checkout{display:none}
+    label{display:block;font-weight:600;margin:12px 0 6px}
+    input{width:100%;padding:12px;border:1px solid #d0d5dd;border-radius:7px;font-size:15px}
+    .success{display:none;margin-top:18px;padding:15px;border-radius:8px;background:#ecfdf3;color:var(--success)}
+    footer{text-align:center;padding:35px;color:var(--muted)}
+    .badge{display:inline-block;padding:5px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:12px;font-weight:700}
+    @media(max-width:650px){nav a{margin-left:10px}.hero h1{font-size:30px}}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">GA4 Practice Store</div>
+    <nav>
+      <a href="#products" onclick="trackViewItemList()">Products</a>
+      <a href="#cart" onclick="showCart()">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="badge">GA4 E-commerce Practice</span>
+  <h1>Learn Analytics With a Test Store</h1>
+  <p>A small demo webshop for practising Google Analytics 4 ecommerce tracking.</p>
+</section>
+
+<main class="container">
+  <section id="products">
+    <h2>Products</h2>
+    <div class="products">
+
+      <article class="card">
+        <div class="image">🔧</div>
+        <h3>Professional Drill</h3>
+        <p class="desc">18V cordless drill for home and professional projects.</p>
+        <div class="price">€89.99</div>
+        <button onclick="openProduct('SKU-001')">View product</button>
+      </article>
+
+      <article class="card">
+        <div class="image">🎧</div>
+        <h3>Wireless Headphones</h3>
+        <p class="desc">Bluetooth headphones with comfortable ear cushions.</p>
+        <div class="price">€59.99</div>
+        <button onclick="openProduct('SKU-002')">View product</button>
+      </article>
+
+      <article class="card">
+        <div class="image">☕</div>
+        <h3>Travel Coffee Maker</h3>
+        <p class="desc">Compact coffee maker for home, office and travel.</p>
+        <div class="price">€39.99</div>
+        <button onclick="openProduct('SKU-003')">View product</button>
+      </article>
+
+      <article class="card">
+        <div class="image">💡</div>
+        <h3>LED Desk Lamp</h3>
+        <p class="desc">Adjustable LED desk lamp with three brightness modes.</p>
+        <div class="price">€29.99</div>
+        <button onclick="openProduct('SKU-004')">View product</button>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="cart" class="section">
+    <h2>Your cart</h2>
+    <div id="cart-items"><p class="desc">Your cart is empty.</p></div>
+    <div class="total">Total: €<span id="cart-total">0.00</span></div>
+    <button onclick="beginCheckout()">Begin checkout</button>
+  </section>
+
+  <section id="checkout" class="section checkout">
+    <h2>Checkout</h2>
+
+    <label for="name">Name</label>
+    <input id="name" type="text" placeholder="John Smith">
+
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="john@example.com">
+
+    <label for="address">Address</label>
+    <input id="address" type="text" placeholder="Example Street 10">
+
+    <br><br>
+    <button onclick="completePurchase()">Complete purchase</button>
+
+    <div id="success" class="success">
+      Purchase completed. Transaction ID: <strong id="transaction-id"></strong>
+    </div>
+  </section>
+</main>
+
+<footer>
+  GA4 Practice Store · Test website for Google Analytics learning
+</footer>
+
+<script>
+  /*
+   * ============================================================
+   * GA4 E-COMMERCE PRACTICE
+   * ============================================================
+   * Events implemented:
+   *
+   * page_view            - handled by Google tag
+   * view_item_list       - product list viewed
+   * view_item            - product viewed
+   * add_to_cart          - product added
+   * view_cart            - cart opened
+   * begin_checkout       - checkout started
+   * purchase              - purchase completed
+   *
+   * These use Google's recommended GA4 ecommerce event names.
+   */
+
+  const products = {
+    "SKU-001": {
+      item_id: "SKU-001",
+      item_name: "Professional Drill",
+      price: 89.99,
+      item_category: "Tools"
+    },
+    "SKU-002": {
+      item_id: "SKU-002",
+      item_name: "Wireless Headphones",
+      price: 59.99,
+      item_category: "Electronics"
+    },
+    "SKU-003": {
+      item_id: "SKU-003",
+      item_name: "Travel Coffee Maker",
+      price: 39.99,
+      item_category: "Home Appliances"
+    },
+    "SKU-004": {
+      item_id: "SKU-004",
+      item_name: "LED Desk Lamp",
+      price: 29.99,
+      item_category: "Lighting"
+    }
+  };
+
+  let cart = [];
+
+  function sendGA4Event(name, params) {
+    if (typeof gtag === "function") {
+      gtag("event", name, params);
+    }
+    console.log("GA4:", name, params);
+  }
+
+  function getListItems() {
+    return Object.values(products).map(function(p) {
+      return {
+        item_id: p.item_id,
+        item_name: p.item_name,
+        item_category: p.item_category,
+        price: p.price
+      };
+    });
+  }
+
+  function trackViewItemList() {
+    sendGA4Event("view_item_list", {
+      item_list_id: "main_products",
+      item_list_name: "Main Products",
+      items: getListItems()
+    });
+  }
+
+  function openProduct(id) {
+    const p = products[id];
+
+    sendGA4Event("view_item", {
+      currency: "EUR",
+      value: p.price,
+      items: [{
+        item_id: p.item_id,
+        item_name: p.item_name,
+        item_category: p.item_category,
+        price: p.price,
+        quantity: 1
+      }]
+    });
+
+    addToCart(id);
+  }
+
+  function addToCart(id) {
+    const p = products[id];
+    const existing = cart.find(function(item) {
+      return item.item_id === id;
+    });
+
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        item_id: p.item_id,
+        item_name: p.item_name,
+        item_category: p.item_category,
+        price: p.price,
+        quantity: 1
+      });
+    }
+
+    sendGA4Event("add_to_cart", {
+      currency: "EUR",
+      value: p.price,
+      items: [{
+        item_id: p.item_id,
+        item_name: p.item_name,
+        item_category: p.item_category,
+        price: p.price,
+        quantity: 1
+      }]
+    });
+
+    updateCart();
+    showCart();
+  }
+
+  function showCart() {
+    document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+
+    sendGA4Event("view_cart", {
+      currency: "EUR",
+      value: getCartTotal(),
+      items: cart
+    });
+  }
+
+  function getCartTotal() {
+    return cart.reduce(function(total, item) {
+      return total + item.price * item.quantity;
+    }, 0);
+  }
+
+  function updateCart() {
+    const container = document.getElementById("cart-items");
+    const count = cart.reduce(function(total, item) {
+      return total + item.quantity;
+    }, 0);
+
+    document.getElementById("cart-count").textContent = count;
+    document.getElementById("cart-total").textContent = getCartTotal().toFixed(2);
+
+    if (!cart.length) {
+      container.innerHTML = '<p class="desc">Your cart is empty.</p>';
+      return;
+    }
+
+    container.innerHTML = cart.map(function(item) {
+      return `
+        <div class="cart-row">
+          <div>
+            <strong>${item.item_name}</strong><br>
+            <span class="desc">€${item.price.toFixed(2)} × ${item.quantity}</span>
+          </div>
+          <div class="cart-actions">
+            <button class="secondary" onclick="removeOne('${item.item_id}')">−</button>
+            <button onclick="addToCart('${item.item_id}')">+</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function removeOne(id) {
+    const item = cart.find(function(i) {
+      return i.item_id === id;
+    });
+
+    if (!item) return;
+
+    item.quantity -= 1;
+
+    if (item.quantity <= 0) {
+      cart = cart.filter(function(i) {
+        return i.item_id !== id;
+      });
+    }
+
+    updateCart();
+  }
+
+  function beginCheckout() {
+    if (!cart.length) {
+      alert("Add at least one product first.");
+      return;
+    }
+
+    sendGA4Event("begin_checkout", {
+      currency: "EUR",
+      value: getCartTotal(),
+      items: cart
+    });
+
+    const checkout = document.getElementById("checkout");
+    checkout.style.display = "block";
+    checkout.scrollIntoView({behavior:"smooth"});
+  }
+
+  function completePurchase() {
+    if (!cart.length) return;
+
+    const transactionId = "TEST-" + Date.now();
+    const total = getCartTotal();
+
+    sendGA4Event("purchase", {
+      transaction_id: transactionId,
+      currency: "EUR",
+      value: total,
+      tax: 0,
+      shipping: 0,
+      items: cart
+    });
+
+    document.getElementById("transaction-id").textContent = transactionId;
+    document.getElementById("success").style.display = "block";
+
+    cart = [];
+    updateCart();
+  }
+
+  /*
+   * Send a product-list event when the page loads.
+   */
+  window.addEventListener("load", function() {
+    trackViewItemList();
+  });
+</script>
+
+</body>
+</html>
